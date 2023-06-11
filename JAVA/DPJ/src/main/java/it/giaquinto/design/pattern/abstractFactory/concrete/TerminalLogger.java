@@ -12,8 +12,8 @@ public class TerminalLogger extends LoggerBuffer implements AbstractProductLog {
     public boolean writeLog(String message, Priority priority) {
         insertNew(new Pair<>(message, priority));
         return switch(priority) {
-            case LOW, MIDDLE -> System.out.printf("[%s] :: %s%n", priority.name(), message).checkError();
-            case HIGH, WARNING, EMERGENCY -> System.err.printf("[%s] :: %s%n", priority.name(), message).checkError();
+            case LOW, MIDDLE -> !System.out.printf("[%s] :: %s%n", priority.name(), message).checkError();
+            case HIGH, WARNING, EMERGENCY -> !System.err.printf("[%s] :: %s%n", priority.name(), message).checkError();
         };
     }
 
